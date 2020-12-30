@@ -1,161 +1,141 @@
 const Engine = Matter.Engine;
-const World = Matter.World;
+const World= Matter.World;
 const Bodies = Matter.Bodies;
-const Body = Matter.Body;
 const Constraint = Matter.Constraint;
-var score=0
+//var engine, world
+var score=0;
+var bg="light.jpg";
+var backgroundImg;
 
+function preload(){
+light = loadImage("light.jpg");
+}
 
 function setup() {
-  createCanvas(1200,600);
+  createCanvas(800,400);
+  engine= Engine.create();
+  world= engine.world;
   
+  ground=new Ground(800,height,1600,20);
+  ground2= new Ground(500,300,230,10);
+  ground3= new Ground(700,150,150,10);
+
+  block1 = new Block(410,275,30,40);
+  block2 = new Block(440,275,30,40);
+  block3 = new Block(470,275,30,40);
+  block4 = new Block(500,275,30,40);
+  block5 = new Block(530,275,30,40);
+  block6 = new Block(560,275,30,40);
+  block7 = new Block(590,275,30,40);
+ 
+  block8 = new Block(440,235,30,40);
+  block9 = new Block(470,235,30,40);
+  block10 = new Block(500,235,30,40);
+  block11 = new Block(530,235,30,40);
+  block12 = new Block(560,235,30,40);
+
+  block13 = new Block(470,195,30,40);
+  block14 = new Block(500,195,30,40);
+  block15 = new Block(530,195,30,40);
   
+  block16 = new Block(500,155,30,40);
 
-  engine = Engine.create();
-  world = engine.world;
+  block17= new Block(650,128,25,35);
+  block18= new Block(675,128,25,35);
+  block19= new Block(700,128,25,35);
+  block20= new Block(725,128,25,35);
+  block21= new Block(750,128,25,35);
 
-  Engine.run(engine)
+  block22= new Block(675,93,25,35);
+  block23= new Block(700,93,25,35);
+  block24= new Block(725,93,25,35);
 
-  ground = new Ground(600,580,1200,20);
+  block25= new Block(700,58,25,35);
 
-  ground2 = new Ground(390,300,260,10);
-  ground3 = new Ground(900,400,200,10);
-
-  polygon = new Polygon(150,200,30,30);
-
-  launcher = new Slingshot(polygon.body,{x:150, y:110})
-  
-  
-  block1= new Block(480,275,30,40);
-  block2 = new Block(450,275,30,40);
-  block3 = new Block(420,275,30,40);
-  block4 = new Block(390,275,30,40);
-  block5 = new Block(360,275,30,40);
-  block6 = new Block(330,275,30,40);
-  block7 = new Block(300,275,30,40);
-  block8 = new Block(330,235,30,40);
-  block9 = new Block(360,235,30,40);
-  block10 = new Block(390,235,30,40);
-  block11 = new Block(420,235,30,40);
-  block12 = new Block(450,235,30,40);
-  block13 = new Block(360,195,30,40);
-  block14 = new Block(390,195,30,40);
-  block15 = new Block(420,195,30,40);
-  block16 = new Block(390,155,30,40);
-
-  b1 = new Block(900,300,30,40);
-  b2 = new Block(900,335,30,40);
-  b3 = new Block(870,335,30,40);
-  b4 = new Block(930,335,30,40);
-  b5 = new Block(900,375,30,40);
-  b6 = new Block(870,375,30,40);
-  b7 = new Block(840,375,30,40);
-  b8 = new Block(930,375,30,40);
-  b9 = new Block(960,375,30,40);
-  
-
-
+  square=new Square(150,200,45);
+  drag= new Drager(square.body,{x:150,y:100});
 }
 
 function draw() {
-  background("lightgrey")
-  textSize(20)
-
-  
-  text("score:"+score,width-100,100);
-console.log(score)
-
-  text("Press Space For Another Try",450,100)
-  ground.display();
-  ground2.display();
-  ground3.display();
-fill("purple")
-  block1.display();
-  block2.display();
-  block3.display();
-  block4.display();
-  block5.display();
-  block6.display();
-  block7.display();
-  fill("pink")
-  block8.display();
-  block9.display();
-  block10.display();
-  block11.display();
-  block12.display();
-  fill("yellow")
-  block13.display();
-  block14.display();
-  block15.display();
-  fill(171,247,247)
-  block16.display(); 
-
-  b1.display();
-  fill("pink")
-  b2.display();
-  b3.display();
-  b4.display();
-fill("purple")
-  b5.display();
-  b6.display();
-  b7.display();
-  b8.display();
-  b9.display();
-  
-  block1.Score();
- block2.Score();
- block3.Score();
- block4.Score();
- block5.Score();
- block6.Score();
- block7.Score();
- block8.Score();
- block9.Score();
- block10.Score();
- block11.Score();
- block12.Score();
- block13.Score();
- block14.Score();
- block15.Score();
- block16.Score();
-
- b1.Score();
- b2.Score();
- b3.Score();
- b4.Score();
- b5.Score();
- b6.Score();
- b7.Score();
- b8.Score();
- b9.Score();
-
+  background("white");  
+  Engine.update(engine);
+ ground.display();
+ ground2.display();
+ ground3.display();
  
+ textSize(30);
+ text("score:"+score,20,20);
+
+ fill("purple");
+ block1.display();
+ block2.display();
+ block3.display();
+ block4.display();
+ block5.display();
+ block6.display(); 
+ block7.display();
+ fill("violet");
+ block8.display();
+ block9.display();
+ block10.display();
+ block11.display();
+ block12.display();
+ fill("pink");
+ block13.display();
+ block14.display();
+ block15.display();
+ fill("white");
+ block16.display();
+ fill("purple");
+ block17.display();
+ block18.display();
+ block19.display();
+ block20.display();
+ block21.display();
+ fill("violet");
+ block22.display();
+ block23.display();
+ block24.display();
+ fill("pink");
+ block25.display();
+ square.display();
+ drag.display();
+
+ block1.score();
+ block2.score();
+ block3.score();
+ block4.score();
+ block5.score();
+ block6.score();
+ block7.score();
+ block8.score();
+ block9.score();
+ block10.score();
+ block11.score();
+ block12.score();
+ block13.score();
+ block14.score();
+ block15.score();
+ block16.score();
+ block17.score();
+ block18.score();
+ block19.score();
+ block20.score();
+ block21.score();
+ block22.score();
+ block23.score();
+ block24.score();
+ block25.score();
  
-
-  polygon.display();
-
-  launcher.display();
-
-  drawSprites();
-
 }
-
-function mouseDragged()  {
-  Matter.Body.setPosition(polygon.body,{x: mouseX, y: mouseY})
+function mouseDragged(){
+  Matter.Body.setPosition(square.body,{x:mouseX,y:mouseY});
 }
-
-function mouseReleased()  {
-  launcher.fly()
-  
-
+function mouseReleased(){
+  drag.fly();
 }
-
-function keyPressed()  {
-  if(keyCode===32)  {
- 
-    launcher.attach(polygon.body);
-
+function keyPressed(){
+  if(keyCode===32){
+      drag.attach(square.body);
   }
-
 }
-
